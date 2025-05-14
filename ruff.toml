@@ -1,0 +1,24 @@
+# Ruff configuration (ruff.toml must live at the repo root)
+
+# Maximum allowed line length
+line-length = 88
+
+# Which rules to enforce:
+# E   = pycodestyle errors
+# F   = pyflakes errors
+# W   = pycodestyle warnings
+# I   = import-related rules
+# C90 = cognitive complexity metrics
+lint.select = ["E", "F", "W", "I", "C90"]
+
+# Ignore rules that conflict with Black formatting
+lint.ignore = ["E203"]
+
+# Directories to skip entirely
+exclude = [
+  "__pycache__",
+  "build",
+  "dist",
+  ".venv",
+  "venv"
+]

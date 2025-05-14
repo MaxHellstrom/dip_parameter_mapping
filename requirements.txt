@@ -1,0 +1,7 @@
+numpy>=2.55
+matplotlib>=3.7
+ruff>=3.10.3
+ipykernel>=6.29.5
+joblib>=1.5.0
+scipy>=1.15.3
+tqdm>=4.67.1
