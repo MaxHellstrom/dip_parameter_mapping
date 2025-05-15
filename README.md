@@ -29,3 +29,7 @@ https://pytorch.org/get-started/locally/
 2. **Run denoiser**
 
    Run `run_denoiser_t1_synthetic.py` and observe output in the selected results folder
+
+3. **Evaluate results**
+
+   Run `eval_results/plot_results_vs_references.ipynb` and compare results with reference methods
