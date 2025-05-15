@@ -1,6 +1,6 @@
-numpy>=2.55
+numpy>=2.2.5
 matplotlib>=3.7
-ruff>=3.10.3
+ruff>=0.11.2
 ipykernel>=6.29.5
 joblib>=1.5.0
 scipy>=1.15.3
