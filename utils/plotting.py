@@ -256,6 +256,7 @@ def plot_estimate_signal(
         plot.export(path_export, bbox_inches="tight", dpi=dpi)
         plt.close(plot.fig)
 
+
 def _trace_region_box(c, sx, sy):
     cx, cy = c[0], c[1]
 
@@ -302,3 +303,64 @@ def find_clip_indices(image: np.array, slack: int = 0):
 
     """
 
+    if len(image.shape) == 3:
+        x1, x2, y1, y2 = [], [], [], []
+
+        nslices, nrows, ncols = image.shape
+
+        for idx_slice in range(nslices):
+            mat = image[idx_slice, :, :]
+
+            for row in range(nrows):
+                if np.count_nonzero(mat[row, :]) > 0:
+                    x1.append(row - slack)
+                    break
+
+            temp = np.flipud(mat)
+
+            for row in range(nrows):
+                if np.count_nonzero(mat[row, :]) > 0:
+                    x2.append(row - slack)
+                    break
+
+            for col in range(ncols):
+                if np.count_nonzero(mat[:, col]) > 0:
+                    y1.append(col - slack)
+                    break
+
+            temp = np.fliplr(mat)
+
+            for col in range(ncols):
+                if np.count_nonzero(mat[:, col]) > 0:
+                    y2.append(col - slack)
+                    break
+
+        return min(x1), min(x2), min(y1), min(y2)
+
+    nrows, ncols = image.shape
+
+    for row in range(nrows):
+        if np.count_nonzero(image[row, :]) > 0:
+            x1 = row - slack
+            break
+
+    temp = np.flipud(image)
+
+    for row in range(nrows):
+        if np.count_nonzero(temp[row, :]) > 0:
+            x2 = row - slack
+            break
+
+    for col in range(ncols):
+        if np.count_nonzero(image[:, col]) > 0:
+            y1 = col - slack
+            break
+
+    temp = np.fliplr(image)
+
+    for col in range(ncols):
+        if np.count_nonzero(image[:, col]) > 0:
+            y2 = col - slack
+            break
+
+    return x1, x2, y1, y2
