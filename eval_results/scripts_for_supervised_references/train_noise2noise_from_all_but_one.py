@@ -1,12 +1,14 @@
+from pathlib import Path
+
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
-from models import DnCNN
-import matplotlib.pyplot as plt
 from scipy.ndimage import binary_erosion
-from pathlib import Path
+from torch.utils.data import DataLoader, Dataset
+
+from models import DnCNN
 
 DIR_DATA = Path(r"C:\Users\mahe0239\git\paper3-private\data\data_parsed\T1_VFA")
 idx_test = 0  # Patient to exclude from training
