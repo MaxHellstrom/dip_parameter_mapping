@@ -255,3 +255,50 @@ def plot_estimate_signal(
     if path_export is not None:
         plot.export(path_export, bbox_inches="tight", dpi=dpi)
         plt.close(plot.fig)
+
+def _trace_region_box(c, sx, sy):
+    cx, cy = c[0], c[1]
+
+    trace_x = np.array(
+        [cx - 0.5 * sx, cx - 0.5 * sx, cx + 0.5 * sx, cx + 0.5 * sx, cx - 0.5 * sx]
+    )
+
+    trace_y = np.array(
+        [cy - 0.5 * sy, cy + 0.5 * sy, cy + 0.5 * sy, cy - 0.5 * sy, cy - 0.5 * sy]
+    )
+
+    return trace_x.astype(int), trace_y.astype(int)
+
+
+def _select_matrix_from_box(image, trace_x, trace_y, stack=False):
+    xmin, xmax, ymin, ymax = trace_x.min(), trace_x.max(), trace_y.min(), trace_y.max()
+
+    if stack:
+        return image[:, ymin:ymax, xmin:xmax]
+    return image[ymin:ymax, xmin:xmax]
+
+
+def find_clip_indices(image: np.array, slack: int = 0):
+    """Find the row- and column indices of the unused
+    pixelspace around a 2D image, or a 3D image stack with stack dim 0
+
+    Parameters
+    ----------
+    image : np.array
+        magnitude 2D image
+    slack : int, optional
+        set number of extra pixels, by default 0
+
+    Returns
+    -------
+    x1: int
+        index of first row containing positive values
+    x2: int
+        index of last row with magnitude positive values
+    y1: int
+        index of first image column with magnitude positive values
+    y2: int
+        index of last image column with magnitude positive values
+
+    """
+
